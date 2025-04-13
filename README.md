@@ -1,6 +1,6 @@
 # react-native-smooth-sheet
 
-[![npm version](https://img.shields.io/npm/v/react-native-smooth-sheet?color=%2300b894&label=npm&style=flat-square)](https://www.npmjs.com/package/react-native-smooth-sheet)
+[![npm version](https://img.shields.io/npm/v/react-native-smooth-sheet)](https://www.npmjs.com/package/react-native-smooth-sheet)
 
 🎉 A **smooth, animated, and customizable** bottom sheet component for React Native — built from scratch with **zero dependencies**.  
 Perfect for **Expo** and **React Native CLI** apps.
