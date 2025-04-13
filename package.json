@@ -1,6 +1,6 @@
 {
   "name": "react-native-smooth-sheet",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "A smooth and customizable bottom sheet component for React Native.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
