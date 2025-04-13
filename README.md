@@ -52,12 +52,12 @@ export default function App() {
 
 ## 📐 Props
 
-| Prop        | Type          | Default | Description                                               |
-|-------------|---------------|---------|-----------------------------------------------------------|
-| `isVisible` | `boolean`     | —       | Controls whether the sheet is shown or hidden             |
-| `onClose`   | `() => void`  | —       | Called after the sheet finishes its closing animation     |
-| `snapPoint` | `number`      | `0.25`   | Fraction of screen height (e.g. `0.25`, `0.5`, `0.75`, `1`) |
-| `children`  | `ReactNode`   | —       | Content to render inside the bottom sheet                 |
+| Prop        | Type          | Default     | Description                                               |
+|-------------|---------------|-------------|-----------------------------------------------------------|
+| `isVisible` | `boolean`     | —           | Controls whether the sheet is shown or hidden             |
+| `onClose`   | `() => void`  | —           | Called after the sheet finishes its closing animation     |
+| `snapPoint` | `number`      | `0.25=25%`  | Fraction of screen height (e.g. `0.25`, `0.3=30%`, `0.5`, `0.75`,`0.8` `0.9`, `1`) |
+| `children`  | `ReactNode`   | —           | Content to render inside the bottom sheet                 |
 
 ---
 
@@ -74,7 +74,7 @@ export default function App() {
 ## 🧩 Features
 
 - 💨 Smooth animated opening/closing
-- 📏 Configurable snap points: `0.25`, `0.5`, `0.75`, `1`
+- 📏 Configurable snap points: `0.25`,`0.3`,`0.4`, `0.5`, `0.75`, `0.8`,`0.90`, `0.95`, `1`
 - 🎛️ Fully customizable content via `children`
 - 🎯 Drag-to-close gesture support
 - ⚡ **Zero dependencies** – no `Reanimated`, no `GestureHandler`
