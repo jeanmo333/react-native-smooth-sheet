@@ -30,17 +30,18 @@ export default function App() {
     <View style={{ flex: 1 }}>
       <Button title="Open Sheet" onPress={() => setVisible(true)} />
 
-      <SmoothSheet
+     <SmoothSheet
         ref={sheetRef}
         isVisible={visible}
         onClose={() => setVisible(false)}
-        snapPoint={0.75}
+        snapPoint={0.5}
       >
-        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+        <Text style={{ fontSize: 18, marginBottom: 20, fontWeight: "bold" }}>
           Hello from Smooth Sheet 🎉
         </Text>
         <Button title="Close" onPress={() => sheetRef.current?.close()} />
       </SmoothSheet>
+      
     </View>
   );
 }
