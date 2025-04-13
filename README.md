@@ -13,8 +13,7 @@ npm install react-native-smooth-sheet
 yarn add react-native-smooth-sheet
 ```
 ---
-## Demo
-![Demo](./assets/demo.gif)
+
 ---
 
 ## 💡 Usage
