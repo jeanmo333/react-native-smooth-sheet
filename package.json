@@ -1,0 +1,39 @@
+{
+  "name": "react-native-smooth-sheet",
+  "version": "1.0.0",
+  "description": "A smooth and customizable bottom sheet component for React Native.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "react-native",
+    "bottom-sheet",
+    "custom",
+    "animated",
+    "expo",
+    "modal",
+    "gesture",
+    "smooth"
+  ],
+  "author": "Moril",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-native": ">=0.68.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.1",
+    "@types/react-native": "^0.72.8",
+    "typescript": "^5.8.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuusuario/react-native-smooth-sheet.git"
+  }
+}
