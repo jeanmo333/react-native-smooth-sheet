@@ -56,7 +56,7 @@ export default function App() {
 |-------------|---------------|-------------|-----------------------------------------------------------|
 | `isVisible` | `boolean`     | —           | Controls whether the sheet is shown or hidden             |
 | `onClose`   | `() => void`  | —           | Called after the sheet finishes its closing animation     |
-| `snapPoint` | `number`      | `0.25=25%`  | Fraction of screen height (e.g. `0.25`, `0.3=30%`, `0.5`, `0.75`,`0.8` `0.9`, `1`) |
+| `snapPoint` | `number`      | `0.25=25%`  | Fraction of screen height (e.g. `0.25`, `0.3=30%`, `0.5=50%`, `0.75=75%`,`0.8=80%`, `0.9=90%`, `0.95=95%`, `1=100%`) |
 | `children`  | `ReactNode`   | —           | Content to render inside the bottom sheet                 |
 
 ---
