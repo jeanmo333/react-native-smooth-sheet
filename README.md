@@ -14,7 +14,7 @@ yarn add react-native-smooth-sheet
 ```
 ---
 ## Demo
-![Demo](./assets/demo.gif);
+![Demo](./assets/demo.gif)
 ---
 
 ## 💡 Usage
