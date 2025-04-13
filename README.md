@@ -50,6 +50,68 @@ export default function App() {
 
 ---
 
+## 🧩 Custom Components Support
+
+You can render your own custom components inside the `SmoothSheet`. For example:
+
+```tsx
+// HelloSmooth.tsx
+import { Text, Button } from 'react-native';
+import React from 'react';
+import { SmoothSheetRef } from 'react-native-smooth-sheet';
+
+interface Props {
+  sheetRef: React.RefObject<SmoothSheetRef>;
+}
+
+const HelloSmooth = ({ sheetRef }: Props) => {
+  return (
+    <>
+      <Text style={{ fontSize: 18, marginBottom: 20, fontWeight: 'bold' }}>
+        Hello from Smooth Sheet 🎉
+      </Text>
+      <Button title="Close" onPress={() => sheetRef.current?.close()} />
+    </>
+  );
+};
+
+export default HelloSmooth;
+```
+
+Then use it inside your screen like this:
+
+```tsx
+// App.tsx
+import React, { useRef, useState } from 'react';
+import { View, Button } from 'react-native';
+import { SmoothSheet, SmoothSheetRef } from 'react-native-smooth-sheet';
+import HelloSmooth from './HelloSmooth';
+
+export default function App() {
+  const [visible, setVisible] = useState(false);
+  const sheetRef = useRef<SmoothSheetRef>(null);
+
+  return (
+    <View style={{ flex: 1 }}>
+      <Button title="Open Sheet" onPress={() => setVisible(true)} />
+      
+      <SmoothSheet
+        ref={sheetRef}
+        isVisible={visible}
+        onClose={() => setVisible(false)}
+        snapPoint={0.5}
+      >
+        <HelloSmooth sheetRef={sheetRef} />
+      </SmoothSheet>
+    </View>
+  );
+}
+```
+
+✅ This makes your implementation more modular and reusable!
+
+---
+
 ## 📐 Props
 
 | Prop        | Type          | Default     | Description                                               |
