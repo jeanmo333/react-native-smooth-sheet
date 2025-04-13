@@ -36,7 +36,10 @@ export default function App() {
         ref={sheetRef}
         isVisible={visible}
         onClose={() => setVisible(false)}
-        snapPoint={0.5}
+        snapPoint={0.25} //as default
+        paddingHorizontal={15} //as default
+        borderTopLeftRadius={20} //as default
+        borderTopRightRadius={20} //as default
       >
         <Text style={{ fontSize: 18, marginBottom: 20, fontWeight: "bold" }}>
           Hello from Smooth Sheet 🎉
@@ -99,7 +102,10 @@ export default function App() {
         ref={sheetRef}
         isVisible={visible}
         onClose={() => setVisible(false)}
-        snapPoint={0.5}
+        snapPoint={0.25} //as default
+        paddingHorizontal={15} //as default
+        borderTopLeftRadius={20} //as default
+        borderTopRightRadius={20} //as default
       >
         <HelloSmooth sheetRef={sheetRef} />
       </SmoothSheet>
@@ -114,12 +120,15 @@ export default function App() {
 
 ## 📐 Props
 
-| Prop        | Type          | Default     | Description                                               |
-|-------------|---------------|-------------|-----------------------------------------------------------|
-| `isVisible` | `boolean`     | —           | Controls whether the sheet is shown or hidden             |
-| `onClose`   | `() => void`  | —           | Called after the sheet finishes its closing animation     |
-| `snapPoint` | `number`      | `0.25=25%`  | Fraction of screen height (e.g. `0.25`, `0.3=30%`, `0.5=50%`, `0.75=75%`,`0.8=80%`, `0.9=90%`, `0.95=95%`, `1=100%`) |
-| `children`  | `ReactNode`   | —           | Content to render inside the bottom sheet                 |
+| Prop                  | Type          | Default     | Description                                                                 |
+|-----------------------|---------------|-------------|-----------------------------------------------------------------------------|
+| `isVisible`           | `boolean`     | —           | Controls whether the sheet is shown or hidden                               |
+| `onClose`             | `() => void`  | —           | Called after the sheet finishes its closing animation                       |
+| `snapPoint`           | `number`      | `0.25=25%`  | Fraction of screen height (e.g. `0.25`, `0.3=30%`, `0.5=50%`, `0.75=75%`,`0.8=80%`, `0.9=90%`, `0.95=95%`, `1=100%`)            |
+| `paddingHorizontal`   | `number`      | `15`        | Horizontal padding inside the sheet                                         |
+| `borderTopLeftRadius` | `number`      | `20`        | Top-left corner radius of the sheet                                         |
+| `borderTopRightRadius`| `number`      | `20`        | Top-right corner radius of the sheet                                        |
+| `children`            | `ReactNode`   | —           | Content to render inside the bottom sheet                                   |
 
 ---
 
