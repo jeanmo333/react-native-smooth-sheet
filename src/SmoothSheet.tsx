@@ -23,7 +23,7 @@ import React, {
   type Props = {
     isVisible: boolean;
     onClose: () => void;
-    snapPoint?: number; // Entre 0.25 y 1
+    snapPoint?: number; // Between 0.25 and 1
     borderTopLeftRadius?: number;
     borderTopRightRadius?: number;
     paddingHorizontal?: number;
@@ -47,7 +47,7 @@ import React, {
       const backdropOpacity = useRef(new Animated.Value(0)).current;
       const currentSnapYRef = useRef(SCREEN_HEIGHT * (1 - snapPoint));
   
-      // Actualiza el snap actual cuando cambia el snapPoint
+      // Updates the current snap when the snapPoint changes
       useEffect(() => {
         const newSnapY = SCREEN_HEIGHT * (1 - snapPoint);
         currentSnapYRef.current = newSnapY;
@@ -112,7 +112,7 @@ import React, {
             useNativeDriver: true,
           }),
         ]).start(() => {
-          onClose(); // Solo se cierra luego de animación
+          onClose(); // It only closes after animation
         });
       };
   
