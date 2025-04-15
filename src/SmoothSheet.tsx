@@ -29,7 +29,7 @@ type Props = {
   borderTopRightRadius?: number;
   paddingHorizontal?: number;
   theme?: string;
-  disableDrag?: boolean; // 👈 nueva prop
+  disableDrag?: boolean; // Disable drag to close
   children: ReactNode;
 };
 
