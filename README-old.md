@@ -12,13 +12,9 @@ npm install react-native-smooth-sheet
 # or
 yarn add react-native-smooth-sheet
 ```
-
 ---
-
-## 🎥 Demo
-
+## Demo
 ![Demo](./assets/demo.gif)
-
 ---
 
 ## 💡 Usage
@@ -40,14 +36,12 @@ export default function App() {
         ref={sheetRef}
         isVisible={visible}
         onClose={() => setVisible(false)}
-        snapPoint={0.25} // default
-        paddingHorizontal={15} // default
-        borderTopLeftRadius={20} // default
-        borderTopRightRadius={20} // default
-        theme="#fff" // default
-        disableDrag={false} // default
+        snapPoint={0.25} //as default
+        paddingHorizontal={15} //as default
+        borderTopLeftRadius={20} //as default
+        borderTopRightRadius={20} //as default
       >
-        <Text style={{ fontSize: 18, marginBottom: 20, fontWeight: "bold", color: 'white' }}>
+        <Text style={{ fontSize: 18, marginBottom: 20, fontWeight: "bold" }}>
           Hello from Smooth Sheet 🎉
         </Text>
         <Button title="Close" onPress={() => sheetRef.current?.close()} />
@@ -87,6 +81,8 @@ const HelloSmooth = ({ sheetRef }: Props) => {
 export default HelloSmooth;
 ```
 
+Then use it inside your screen like this:
+
 ```tsx
 // App.tsx
 import React, { useRef, useState } from 'react';
@@ -106,12 +102,10 @@ export default function App() {
         ref={sheetRef}
         isVisible={visible}
         onClose={() => setVisible(false)}
-        snapPoint={0.25} // default
-        paddingHorizontal={15} // default
-        borderTopLeftRadius={20} // default
-        borderTopRightRadius={20} // default
-        theme="#fff" // default
-        disableDrag={false} // default
+        snapPoint={0.25} //as default
+        paddingHorizontal={15} //as default
+        borderTopLeftRadius={20} //as default
+        borderTopRightRadius={20} //as default
       >
         <HelloSmooth sheetRef={sheetRef} />
       </SmoothSheet>
@@ -134,8 +128,6 @@ export default function App() {
 | `paddingHorizontal`   | `number`      | `15`        | Horizontal padding inside the sheet                                         |
 | `borderTopLeftRadius` | `number`      | `20`        | Top-left corner radius of the sheet                                         |
 | `borderTopRightRadius`| `number`      | `20`        | Top-right corner radius of the sheet                                        |
-| `theme`               | `string`      | `#fff`      | Background color of the sheet (supports any color)                          |
-| `disableDrag`         | `boolean`     | `false`     | Disables drag-to-close and tap outside to close functionality               |
 | `children`            | `ReactNode`   | —           | Content to render inside the bottom sheet                                   |
 
 ---
@@ -153,11 +145,9 @@ export default function App() {
 ## 🧩 Features
 
 - 💨 Smooth animated opening/closing
-- 📏 Configurable snap points
+- 📏 Configurable snap points: `0.25`,`0.3`,`0.4`, `0.5`, `0.75`, `0.8`,`0.90`, `0.95`, `1`
 - 🎛️ Fully customizable content via `children`
 - 🎯 Drag-to-close gesture support
-- 🎨 Light/dark/custom theme support with `theme` prop
-- 🔒 `disableDrag` to lock interactions
 - ⚡ **Zero dependencies** – no `Reanimated`, no `GestureHandler`
 
 ---
@@ -174,3 +164,13 @@ MIT © [Moril Jean Francois](https://github.com/jeanmo333)
 - 📦 NPM: [npmjs.com/package/react-native-smooth-sheet](https://www.npmjs.com/package/react-native-smooth-sheet)
 
 
+---
+
+## 🧪 Try it locally
+
+This library supports both Expo and React Native CLI.
+
+You can run the example apps inside the `/example` folder:
+
+- `example/expo` — Expo project
+- `example/rncli` — React Native CLI project

@@ -1,4 +1,5 @@
 src/
+example/
 tsconfig.json
 node_modules/
 .git/
