@@ -13,7 +13,7 @@ const HelloSmooth = ({sheetRef}: Props) => {
         fontSize: 18, 
         marginBottom: 20, 
         fontWeight: 'bold',  
-        color: 'white'
+        color: 'black'
         }}>
         Hello from Smooth Sheet 🎉
       </Text>
