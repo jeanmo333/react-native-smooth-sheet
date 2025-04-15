@@ -7,9 +7,9 @@
 
 import React, {useRef, useState} from 'react';
 import {StyleSheet, Button, SafeAreaView} from 'react-native';
-//import {SmoothSheet, SmoothSheetRef} from 'react-native-smooth-sheet';
+import {SmoothSheet, SmoothSheetRef} from 'react-native-smooth-sheet';
 import HelloSmooth from './HelloSmooth';
-import SmoothSheet, { SmoothSheetRef } from './SmoothSheet';
+//import SmoothSheet, { SmoothSheetRef } from './SmoothSheet';
 
 function App(): React.JSX.Element {
   const [visible, setVisible] = useState(false);
@@ -27,7 +27,7 @@ function App(): React.JSX.Element {
         paddingHorizontal={15} 
         borderTopLeftRadius={20} 
         borderTopRightRadius={20}
-        theme="#fff" 
+        theme="#fff" //#1e1e1e
         disableDrag={false} 
        >
 
