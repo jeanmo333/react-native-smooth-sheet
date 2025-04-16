@@ -30,7 +30,7 @@ type Props = {
   theme?: string;
   disableDrag?: boolean;
   flattenOnFullOpen?: boolean;
-  dragIndicatorColor?: string; // ✅ nuevo prop
+  dragIndicatorColor?: string;
   children: ReactNode;
 };
 
