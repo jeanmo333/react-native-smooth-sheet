@@ -6,10 +6,10 @@
  */
 
 import React, {useRef, useState} from 'react';
-import {StyleSheet, Button, SafeAreaView} from 'react-native';
-import {SmoothSheet, SmoothSheetRef} from 'react-native-smooth-sheet';
+import {StyleSheet, Button, SafeAreaView, Text} from 'react-native';
+//import {SmoothSheet, SmoothSheetRef} from 'react-native-smooth-sheet';
 import HelloSmooth from './HelloSmooth';
-//import SmoothSheet, { SmoothSheetRef } from './SmoothSheet';
+import SmoothSheet, { SmoothSheetRef } from './SmoothSheet';
 
 function App(): React.JSX.Element {
   const [visible, setVisible] = useState(false);
@@ -23,15 +23,25 @@ function App(): React.JSX.Element {
         ref={sheetRef}
         isVisible={visible}
         onClose={() => setVisible(false)}
-        snapPoint={0.5} 
+        snapPoint={1} 
         paddingHorizontal={15} 
-        borderTopLeftRadius={20} 
-        borderTopRightRadius={20}
-        theme="#fff" //#1e1e1e
+        borderTopLeftRadius={0} 
+        dragIndicatorColor="#ccc" //#ff9800  //#666
+        flattenOnFullOpen={true}
+        borderTopRightRadius={0}
+        theme="#fff" //#1e1e1e //#fff
         disableDrag={false} 
        >
 
-        <HelloSmooth sheetRef={sheetRef} />
+       <Text style={{
+           fontSize: 18, 
+           marginBottom: 20, 
+           fontWeight: 'bold',  
+           color: '#000'
+           }}>
+           Hello from Smooth Sheet 🎉
+         </Text>
+         <Button title="Close" onPress={() => sheetRef.current?.close()} />
   
       </SmoothSheet>
     </SafeAreaView>

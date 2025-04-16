@@ -1,570 +1,218 @@
-
 import React, {
-    useEffect,
-    useRef,
-    useImperativeHandle,
-    forwardRef,
-    ReactNode,
-  } from 'react';
-  import {
-    Animated,
-    Dimensions,
-    PanResponder,
-    StyleSheet,
-    View,
-    TouchableWithoutFeedback,
-  } from 'react-native';
-  
-  const { height: SCREEN_HEIGHT } = Dimensions.get('window');
-  
-  export type SmoothSheetRef = {
-    close: () => void;
-  };
-  
-  type Props = {
-    isVisible: boolean;
-    onClose: () => void;
-    snapPoint?: number;
-    borderTopLeftRadius?: number;
-    borderTopRightRadius?: number;
-    paddingHorizontal?: number;
-    theme?: string;
-    disableDrag?: boolean; // 👈 nueva prop
-    children: ReactNode;
-  };
-  
-  const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
-    (
-      {
-        isVisible,
-        onClose,
-        snapPoint = 0.25,
-        children,
-        borderTopLeftRadius = 20,
-        borderTopRightRadius = 20,
-        paddingHorizontal = 15,
-        theme = '#fff',
-        disableDrag = false,
-      },
-      ref
-    ) => {
-      const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
-      const backdropOpacity = useRef(new Animated.Value(0)).current;
-      const currentOffset = useRef(SCREEN_HEIGHT * (1 - snapPoint));
-  
-      const isDark = theme !== '#fff';
-  
-      useImperativeHandle(ref, () => ({
-        close: () => closeSheet(),
-      }));
-  
-      const openSheet = () => {
-        Animated.parallel([
-          Animated.timing(translateY, {
-            toValue: currentOffset.current,
-            duration: 300,
-            useNativeDriver: true,
-          }),
-          Animated.timing(backdropOpacity, {
-            toValue: 0.4,
-            duration: 300,
-            useNativeDriver: true,
-          }),
-        ]).start();
-      };
-  
-      const closeSheet = () => {
-        Animated.parallel([
-          Animated.timing(translateY, {
-            toValue: SCREEN_HEIGHT,
-            duration: 300,
-            useNativeDriver: true,
-          }),
-          Animated.timing(backdropOpacity, {
-            toValue: 0,
-            duration: 300,
-            useNativeDriver: true,
-          }),
-        ]).start(() => {
-          onClose();
-        });
-      };
-  
-      const panResponder = useRef(
-        PanResponder.create({
-          onMoveShouldSetPanResponder: (_, gestureState) =>
-            !disableDrag && Math.abs(gestureState.dy) > 5,
-          onPanResponderMove: (_, gestureState) => {
-            if (!disableDrag) {
-              const newY = currentOffset.current + gestureState.dy;
-              translateY.setValue(Math.max(0, newY));
-            }
-          },
-          onPanResponderRelease: (_, gestureState) => {
-            if (!disableDrag) {
-              translateY.stopAnimation((val) => {
-                const newOffset = val;
-                const shouldClose =
-                  gestureState.dy > 100 || newOffset > SCREEN_HEIGHT * 0.75;
-  
-                if (shouldClose) {
-                  closeSheet();
-                } else {
-                  currentOffset.current = newOffset;
-                }
-              });
-            }
-          },
+  useEffect,
+  useRef,
+  useImperativeHandle,
+  forwardRef,
+  ReactNode,
+} from 'react';
+import {
+  Animated,
+  Dimensions,
+  PanResponder,
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback,
+} from 'react-native';
+
+const { height: SCREEN_HEIGHT } = Dimensions.get('window');
+
+export type SmoothSheetRef = {
+  close: () => void;
+};
+
+type Props = {
+  isVisible: boolean;
+  onClose: () => void;
+  snapPoint?: number;
+  borderTopLeftRadius?: number;
+  borderTopRightRadius?: number;
+  paddingHorizontal?: number;
+  theme?: string;
+  disableDrag?: boolean;
+  flattenOnFullOpen?: boolean;
+  dragIndicatorColor?: string; // ✅ nuevo prop
+  children: ReactNode;
+};
+
+const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
+  (
+    {
+      isVisible,
+      onClose,
+      snapPoint = 0.25,
+      children,
+      borderTopLeftRadius = 20,
+      borderTopRightRadius = 20,
+      paddingHorizontal = 15,
+      theme = '#fff',
+      disableDrag = false,
+      flattenOnFullOpen = false,
+      dragIndicatorColor,
+    },
+    ref
+  ) => {
+    const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
+    const backdropOpacity = useRef(new Animated.Value(0)).current;
+    const currentOffset = useRef(SCREEN_HEIGHT * (1 - snapPoint));
+    const isDark = theme !== '#fff';
+
+    const borderTopLeftAnim = flattenOnFullOpen
+      ? translateY.interpolate({
+          inputRange: [0, SCREEN_HEIGHT],
+          outputRange: [0, borderTopLeftRadius],
+          extrapolate: 'clamp',
         })
-      ).current;
-  
-      useEffect(() => {
-        if (isVisible) {
-          currentOffset.current = SCREEN_HEIGHT * (1 - snapPoint);
-          openSheet();
-        }
-      }, [isVisible]);
-  
-      if (!isVisible) return null;
-  
-      return (
-        <View style={StyleSheet.absoluteFill}>
-          {/* BACKDROP */}
-          <TouchableWithoutFeedback onPress={() => !disableDrag && closeSheet()}>
-            <Animated.View
-              style={[
-                StyleSheet.absoluteFill,
-                {
-                  backgroundColor: 'black',
-                  opacity: backdropOpacity,
-                },
-              ]}
-            />
-          </TouchableWithoutFeedback>
-  
-          {/* SHEET */}
+      : new Animated.Value(borderTopLeftRadius);
+
+    const borderTopRightAnim = flattenOnFullOpen
+      ? translateY.interpolate({
+          inputRange: [0, SCREEN_HEIGHT],
+          outputRange: [0, borderTopRightRadius],
+          extrapolate: 'clamp',
+        })
+      : new Animated.Value(borderTopRightRadius);
+
+    useImperativeHandle(ref, () => ({
+      close: () => closeSheet(),
+    }));
+
+    const openSheet = () => {
+      Animated.parallel([
+        Animated.timing(translateY, {
+          toValue: currentOffset.current,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+        Animated.timing(backdropOpacity, {
+          toValue: 0.4,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    };
+
+    const closeSheet = () => {
+      Animated.parallel([
+        Animated.timing(translateY, {
+          toValue: SCREEN_HEIGHT,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+        Animated.timing(backdropOpacity, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+      ]).start(() => {
+        onClose();
+      });
+    };
+
+    const panResponder = useRef(
+      PanResponder.create({
+        onMoveShouldSetPanResponder: (_, gestureState) =>
+          !disableDrag && Math.abs(gestureState.dy) > 5,
+        onPanResponderMove: (_, gestureState) => {
+          if (!disableDrag) {
+            const newY = currentOffset.current + gestureState.dy;
+            translateY.setValue(Math.max(0, newY));
+          }
+        },
+        onPanResponderRelease: (_, gestureState) => {
+          if (!disableDrag) {
+            translateY.stopAnimation((val) => {
+              const newOffset = val;
+              const shouldClose =
+                gestureState.dy > 100 || newOffset > SCREEN_HEIGHT * 0.75;
+
+              if (shouldClose) {
+                closeSheet();
+              } else {
+                currentOffset.current = newOffset;
+              }
+            });
+          }
+        },
+      })
+    ).current;
+
+    useEffect(() => {
+      if (isVisible) {
+        currentOffset.current = SCREEN_HEIGHT * (1 - snapPoint);
+        openSheet();
+      }
+    }, [isVisible]);
+
+    if (!isVisible) return null;
+
+    return (
+      <View style={StyleSheet.absoluteFill}>
+        <TouchableWithoutFeedback onPress={() => !disableDrag && closeSheet()}>
           <Animated.View
             style={[
-              styles.sheet,
+              StyleSheet.absoluteFill,
               {
-                transform: [{ translateY }],
-                backgroundColor: theme,
-                borderTopLeftRadius,
-                borderTopRightRadius,
-                paddingHorizontal,
+                backgroundColor: 'black',
+                opacity: backdropOpacity,
               },
             ]}
-            {...(!disableDrag ? panResponder.panHandlers : {})}
-          >
-            <View
-              style={[
-                styles.handle,
-                { backgroundColor: isDark ? '#666' : '#ccc' },
-              ]}
-            />
-            <View style={styles.content}>{children}</View>
-          </Animated.View>
-        </View>
-      );
-    }
-  );
-  
-  const styles = StyleSheet.create({
-    sheet: {
-      position: 'absolute',
-      bottom: 0,
-      height: SCREEN_HEIGHT,
-      width: '100%',
-      paddingTop: 10,
-      elevation: 10,
-    },
-    handle: {
-      width: 50,
-      height: 6,
-      alignSelf: 'center',
-      borderRadius: 10,
-      marginBottom: 10,
-    },
-    content: {
-      paddingBottom: 20,
-    },
-  });
-  
-  export default SmoothSheet;
+          />
+        </TouchableWithoutFeedback>
 
+        <Animated.View
+          style={[
+            styles.sheet,
+            {
+              transform: [{ translateY }],
+              backgroundColor: theme,
+              borderTopLeftRadius: borderTopLeftAnim,
+              borderTopRightRadius: borderTopRightAnim,
+              paddingHorizontal,
+            },
+          ]}
+          {...(!disableDrag ? panResponder.panHandlers : {})}
+        >
+          <View
+            style={[
+              styles.handle,
+              {
+                backgroundColor: dragIndicatorColor
+                  ? dragIndicatorColor
+                  : isDark
+                  ? '#666'
+                  : '#ccc',
+              },
+            ]}
+          />
+          <View style={styles.content}>{children}</View>
+        </Animated.View>
+      </View>
+    );
+  }
+);
 
+const styles = StyleSheet.create({
+  sheet: {
+    position: 'absolute',
+    bottom: 0,
+    height: SCREEN_HEIGHT,
+    width: '100%',
+    paddingTop: 10,
+    elevation: 10,
+  },
+  handle: {
+    width: 50,
+    height: 6,
+    alignSelf: 'center',
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  content: {
+    paddingBottom: 20,
+  },
+});
 
-
-
-
-
-// import React, {
-//     useEffect,
-//     useRef,
-//     useImperativeHandle,
-//     forwardRef,
-//     ReactNode,
-//   } from 'react';
-//   import {
-//     Animated,
-//     Dimensions,
-//     PanResponder,
-//     StyleSheet,
-//     View,
-//     TouchableWithoutFeedback,
-//   } from 'react-native';
-  
-//   const { height: SCREEN_HEIGHT } = Dimensions.get('window');
-  
-//   export type SmoothSheetRef = {
-//     close: () => void;
-//   };
-  
-//   type Props = {
-//     isVisible: boolean;
-//     onClose: () => void;
-//     snapPoint?: number;
-//     borderTopLeftRadius?: number;
-//     borderTopRightRadius?: number;
-//     paddingHorizontal?: number;
-//     theme?: string; // 👈 solo color de fondo
-//     children: ReactNode;
-//   };
-  
-//   const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
-//     (
-//       {
-//         isVisible,
-//         onClose,
-//         snapPoint = 0.25,
-//         children,
-//         borderTopLeftRadius = 20,
-//         borderTopRightRadius = 20,
-//         paddingHorizontal = 15,
-//         theme = '#fff', // 👈 valor por defecto
-//       },
-//       ref
-//     ) => {
-//       const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
-//       const backdropOpacity = useRef(new Animated.Value(0)).current;
-//       const currentOffset = useRef(SCREEN_HEIGHT * (1 - snapPoint));
-  
-//       const isDark = theme !== '#fff';
-  
-//       useImperativeHandle(ref, () => ({
-//         close: () => closeSheet(),
-//       }));
-  
-//       const openSheet = () => {
-//         Animated.parallel([
-//           Animated.timing(translateY, {
-//             toValue: currentOffset.current,
-//             duration: 300,
-//             useNativeDriver: true,
-//           }),
-//           Animated.timing(backdropOpacity, {
-//             toValue: 0.4,
-//             duration: 300,
-//             useNativeDriver: true,
-//           }),
-//         ]).start();
-//       };
-  
-//       const closeSheet = () => {
-//         Animated.parallel([
-//           Animated.timing(translateY, {
-//             toValue: SCREEN_HEIGHT,
-//             duration: 300,
-//             useNativeDriver: true,
-//           }),
-//           Animated.timing(backdropOpacity, {
-//             toValue: 0,
-//             duration: 300,
-//             useNativeDriver: true,
-//           }),
-//         ]).start(() => {
-//           onClose();
-//         });
-//       };
-  
-//       const panResponder = useRef(
-//         PanResponder.create({
-//           onMoveShouldSetPanResponder: (_, gestureState) =>
-//             Math.abs(gestureState.dy) > 5,
-//           onPanResponderMove: (_, gestureState) => {
-//             const newY = currentOffset.current + gestureState.dy;
-//             translateY.setValue(Math.max(0, newY));
-//           },
-//           onPanResponderRelease: (_, gestureState) => {
-//             translateY.stopAnimation((val) => {
-//               const newOffset = val;
-//               const shouldClose =
-//                 gestureState.dy > 100 || newOffset > SCREEN_HEIGHT * 0.75;
-  
-//               if (shouldClose) {
-//                 closeSheet();
-//               } else {
-//                 currentOffset.current = newOffset;
-//               }
-//             });
-//           },
-//         })
-//       ).current;
-  
-//       useEffect(() => {
-//         if (isVisible) {
-//           currentOffset.current = SCREEN_HEIGHT * (1 - snapPoint);
-//           openSheet();
-//         }
-//       }, [isVisible]);
-  
-//       if (!isVisible) return null;
-  
-//       return (
-//         <View style={StyleSheet.absoluteFill}>
-//           <TouchableWithoutFeedback onPress={closeSheet}>
-//             <Animated.View
-//               style={[
-//                 StyleSheet.absoluteFill,
-//                 {
-//                   backgroundColor: 'black',
-//                   opacity: backdropOpacity,
-//                 },
-//               ]}
-//             />
-//           </TouchableWithoutFeedback>
-  
-//           <Animated.View
-//             style={[
-//               styles.sheet,
-//               {
-//                 transform: [{ translateY }],
-//                 backgroundColor: theme,
-//                 borderTopLeftRadius,
-//                 borderTopRightRadius,
-//                 paddingHorizontal,
-//               },
-//             ]}
-//             {...panResponder.panHandlers}
-//           >
-//             <View
-//               style={[
-//                 styles.handle,
-//                 { backgroundColor: isDark ? '#666' : '#ccc' },
-//               ]}
-//             />
-//             <View style={styles.content}>{children}</View>
-//           </Animated.View>
-//         </View>
-//       );
-//     }
-//   );
-  
-//   const styles = StyleSheet.create({
-//     sheet: {
-//       position: 'absolute',
-//       bottom: 0,
-//       height: SCREEN_HEIGHT,
-//       width: '100%',
-//       paddingTop: 10,
-//       elevation: 10,
-//     },
-//     handle: {
-//       width: 50,
-//       height: 6,
-//       alignSelf: 'center',
-//       borderRadius: 10,
-//       marginBottom: 10,
-//     },
-//     content: {
-//       paddingBottom: 20,
-//     },
-//   });
-  
-//   export default SmoothSheet;
-
-
-
-
-// import React, {
-//     useEffect,
-//     useRef,
-//     useImperativeHandle,
-//     forwardRef,
-//     ReactNode,
-//   } from 'react';
-//   import {
-//     Animated,
-//     Dimensions,
-//     PanResponder,
-//     StyleSheet,
-//     View,
-//     TouchableWithoutFeedback,
-//   } from 'react-native';
-  
-//   const { height: SCREEN_HEIGHT } = Dimensions.get('window');
-  
-//   export type SmoothSheetRef = {
-//     close: () => void;
-//   };
-  
-//   type Props = {
-//     isVisible: boolean;
-//     onClose: () => void;
-//     snapPoint?: number; // Initial snap (0.25 = 25% screen height)
-//     borderTopLeftRadius?: number;
-//     borderTopRightRadius?: number;
-//     paddingHorizontal?: number;
-//     children: ReactNode;
-//   };
-  
-//   const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
-//     (
-//       {
-//         isVisible,
-//         onClose,
-//         snapPoint = 0.25,
-//         children,
-//         borderTopLeftRadius = 20,
-//         borderTopRightRadius = 20,
-//         paddingHorizontal = 15,
-//       },
-//       ref
-//     ) => {
-//       const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
-//       const backdropOpacity = useRef(new Animated.Value(0)).current;
-  
-//       // posición actual del sheet
-//       const currentOffset = useRef(SCREEN_HEIGHT * (1 - snapPoint));
-  
-//       useImperativeHandle(ref, () => ({
-//         close: () => closeSheet(),
-//       }));
-  
-//       const openSheet = () => {
-//         Animated.parallel([
-//           Animated.timing(translateY, {
-//             toValue: currentOffset.current,
-//             duration: 300,
-//             useNativeDriver: true,
-//           }),
-//           Animated.timing(backdropOpacity, {
-//             toValue: 0.4,
-//             duration: 300,
-//             useNativeDriver: true,
-//           }),
-//         ]).start();
-//       };
-  
-//       const closeSheet = () => {
-//         Animated.parallel([
-//           Animated.timing(translateY, {
-//             toValue: SCREEN_HEIGHT,
-//             duration: 300,
-//             useNativeDriver: true,
-//           }),
-//           Animated.timing(backdropOpacity, {
-//             toValue: 0,
-//             duration: 300,
-//             useNativeDriver: true,
-//           }),
-//         ]).start(() => {
-//           onClose();
-//         });
-//       };
-  
-//       const panResponder = useRef(
-//         PanResponder.create({
-//           onMoveShouldSetPanResponder: (_, gestureState) =>
-//             Math.abs(gestureState.dy) > 5,
-//           onPanResponderMove: (_, gestureState) => {
-//             const newY = currentOffset.current + gestureState.dy;
-//             translateY.setValue(Math.max(0, newY));
-//           },
-//           onPanResponderRelease: (_, gestureState) => {
-//             translateY.stopAnimation((val) => {
-//               const newOffset = val;
-//               const shouldClose = gestureState.dy > 100 || newOffset > SCREEN_HEIGHT * 0.75;
-  
-//               if (shouldClose) {
-//                 closeSheet();
-//               } else {
-//                 currentOffset.current = newOffset;
-//               }
-//             });
-//           },
-//         })
-//       ).current;
-  
-//       useEffect(() => {
-//         if (isVisible) {
-//           currentOffset.current = SCREEN_HEIGHT * (1 - snapPoint); // reset initial
-//           openSheet();
-//         }
-//       }, [isVisible]);
-  
-//       if (!isVisible) return null;
-  
-//       return (
-//         <View style={StyleSheet.absoluteFill}>
-//           <TouchableWithoutFeedback onPress={closeSheet}>
-//             <Animated.View
-//               style={[
-//                 StyleSheet.absoluteFill,
-//                 {
-//                   backgroundColor: 'black',
-//                   opacity: backdropOpacity,
-//                 },
-//               ]}
-//             />
-//           </TouchableWithoutFeedback>
-  
-//           <Animated.View
-//             style={[
-//               styles.sheet,
-//               {
-//                 transform: [{ translateY }],
-//                 borderTopLeftRadius,
-//                 borderTopRightRadius,
-//                 paddingHorizontal,
-//               },
-//             ]}
-//             {...panResponder.panHandlers}
-//           >
-//             <View style={styles.handle} />
-//             <View style={styles.content}>{children}</View>
-//           </Animated.View>
-//         </View>
-//       );
-//     }
-//   );
-  
-//   const styles = StyleSheet.create({
-//     sheet: {
-//       position: 'absolute',
-//       bottom: 0,
-//       height: SCREEN_HEIGHT,
-//       width: '100%',
-//       backgroundColor: '#fff',
-//       paddingTop: 10,
-//       elevation: 10,
-//     },
-//     handle: {
-//       width: 50,
-//       height: 6,
-//       backgroundColor: '#ccc',
-//       alignSelf: 'center',
-//       borderRadius: 10,
-//       marginBottom: 10,
-//     },
-//     content: {
-//       paddingBottom: 20,
-//     },
-//   });
-  
-//   export default SmoothSheet;
-
-
+export default SmoothSheet;
 
 
 

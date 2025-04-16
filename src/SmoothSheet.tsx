@@ -1,4 +1,3 @@
-
 import React, {
   useEffect,
   useRef,
@@ -29,7 +28,9 @@ type Props = {
   borderTopRightRadius?: number;
   paddingHorizontal?: number;
   theme?: string;
-  disableDrag?: boolean; // Disable drag to close
+  disableDrag?: boolean;
+  flattenOnFullOpen?: boolean;
+  dragIndicatorColor?: string; // ✅ nuevo prop
   children: ReactNode;
 };
 
@@ -45,14 +46,31 @@ const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
       paddingHorizontal = 15,
       theme = '#fff',
       disableDrag = false,
+      flattenOnFullOpen = false,
+      dragIndicatorColor,
     },
     ref
   ) => {
     const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
     const backdropOpacity = useRef(new Animated.Value(0)).current;
     const currentOffset = useRef(SCREEN_HEIGHT * (1 - snapPoint));
-
     const isDark = theme !== '#fff';
+
+    const borderTopLeftAnim = flattenOnFullOpen
+      ? translateY.interpolate({
+          inputRange: [0, SCREEN_HEIGHT],
+          outputRange: [0, borderTopLeftRadius],
+          extrapolate: 'clamp',
+        })
+      : new Animated.Value(borderTopLeftRadius);
+
+    const borderTopRightAnim = flattenOnFullOpen
+      ? translateY.interpolate({
+          inputRange: [0, SCREEN_HEIGHT],
+          outputRange: [0, borderTopRightRadius],
+          extrapolate: 'clamp',
+        })
+      : new Animated.Value(borderTopRightRadius);
 
     useImperativeHandle(ref, () => ({
       close: () => closeSheet(),
@@ -129,7 +147,6 @@ const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
 
     return (
       <View style={StyleSheet.absoluteFill}>
-        {/* BACKDROP */}
         <TouchableWithoutFeedback onPress={() => !disableDrag && closeSheet()}>
           <Animated.View
             style={[
@@ -142,15 +159,14 @@ const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
           />
         </TouchableWithoutFeedback>
 
-        {/* SHEET */}
         <Animated.View
           style={[
             styles.sheet,
             {
               transform: [{ translateY }],
               backgroundColor: theme,
-              borderTopLeftRadius,
-              borderTopRightRadius,
+              borderTopLeftRadius: borderTopLeftAnim,
+              borderTopRightRadius: borderTopRightAnim,
               paddingHorizontal,
             },
           ]}
@@ -159,7 +175,13 @@ const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
           <View
             style={[
               styles.handle,
-              { backgroundColor: isDark ? '#666' : '#ccc' },
+              {
+                backgroundColor: dragIndicatorColor
+                  ? dragIndicatorColor
+                  : isDark
+                  ? '#666'
+                  : '#ccc',
+              },
             ]}
           />
           <View style={styles.content}>{children}</View>
@@ -191,3 +213,6 @@ const styles = StyleSheet.create({
 });
 
 export default SmoothSheet;
+
+
+

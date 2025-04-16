@@ -46,6 +46,8 @@ export default function App() {
         borderTopRightRadius={20} // default
         theme="#fff" // default
         disableDrag={false} // default
+        //dragIndicatorColor="#ccc" --optional  //#ff9800  //#666
+        //flattenOnFullOpen={false}  -- optional
       >
         <Text style={{ fontSize: 18, marginBottom: 20, fontWeight: "bold", color: 'white' }}>
           Hello from Smooth Sheet 🎉
@@ -112,6 +114,8 @@ export default function App() {
         borderTopRightRadius={20} // default
         theme="#fff" // default
         disableDrag={false} // default
+         //dragIndicatorColor="#ccc" --optional  //#ff9800  //#666
+        //flattenOnFullOpen={false}  -- optional
       >
         <HelloSmooth sheetRef={sheetRef} />
       </SmoothSheet>
@@ -135,7 +139,9 @@ export default function App() {
 | `borderTopLeftRadius` | `number`      | `20`        | Top-left corner radius of the sheet                                         |
 | `borderTopRightRadius`| `number`      | `20`        | Top-right corner radius of the sheet                                        |
 | `theme`               | `string`      | `#fff`      | Background color of the sheet (supports any color)                          |
-| `disableDrag`         | `boolean`     | `false`     | Disables drag-to-close and tap outside to close functionality               |
+| `disableDrag`         | `boolean`     | `false`     | Disables drag-to-close and tap outside to close functionality   
+| `dragIndicatorColor`  | `string`      | `#ccc` / `#666` | Customize the drag handle color. Defaults to `#ccc` (light) or `#666` (dark) |
+| `flattenOnFullOpen`   | `boolean`     | `false`     | If `true`, removes border radii when fully expanded (`snapPoint = 1`)       |            |
 | `children`            | `ReactNode`   | —           | Content to render inside the bottom sheet                                   |
 
 ---
