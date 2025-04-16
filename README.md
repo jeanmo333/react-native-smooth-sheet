@@ -141,7 +141,7 @@ export default function App() {
 | `theme`               | `string`      | `#fff`      | Background color of the sheet (supports any color)                          |
 | `disableDrag`         | `boolean`     | `false`     | Disables drag-to-close and tap outside to close functionality   
 | `dragIndicatorColor`  | `string`      | `#ccc` / `#666` | Customize the drag handle color. Defaults to `#ccc` (light) or `#666` (dark) |
-| `flattenOnFullOpen`   | `boolean`     | `false`     | If `true`, removes border radii when fully expanded (`snapPoint = 1`)       |            |
+| `flattenOnFullOpen`   | `boolean`     | `false`     | If `true`, removes border raduis when fully expanded (`snapPoint = 1`)       |            |
 | `children`            | `ReactNode`   | —           | Content to render inside the bottom sheet                                   |
 
 ---
