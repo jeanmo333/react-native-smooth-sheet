@@ -7,9 +7,9 @@
 
 import React, {useRef, useState} from 'react';
 import {StyleSheet, Button, SafeAreaView, Text, Platform} from 'react-native';
-//import {SmoothSheet, SmoothSheetRef} from 'react-native-smooth-sheet';
+import {SmoothSheet, SmoothSheetRef} from 'react-native-smooth-sheet';
 import HelloSmooth from './HelloSmooth';
-import SmoothSheet, { SmoothSheetRef } from './SmoothSheet';
+//import SmoothSheet, { SmoothSheetRef } from './SmoothSheet';
 
 function App(): React.JSX.Element {
   const [visible, setVisible] = useState(false);

@@ -162,11 +162,16 @@ export default function App() {
 ## 🧩 Features
 
 - 💨 Smooth animated opening/closing
-- 📏 Configurable snap points
-- 🎛️ Fully customizable content via `children`
-- 🎯 Drag-to-close gesture support
-- 🎨 Light/dark/custom theme support with `theme` prop
-- 🔒 `disableDrag` to lock interactions
+- 📏 Configurable snap points with `snapPoint`
+- 🧲 Prevent dragging beyond a limit with `maxTopSnapPoint`
+- 🎯 Drag-to-close gesture support (can be disabled with `disableDrag`)
+- 🖼️ Fully customizable content via `children`
+- 🎨 Light/dark/custom theme support via `theme`
+- 🖌️ Customize the drag indicator color using `dragIndicatorColor`
+- 🧩 Border radius customization with `borderTopLeftRadius` and `borderTopRightRadius`
+- 🧱 Flatten top corners on full open using `flattenOnFullOpen`
+- ↔️ Inner horizontal padding control via `paddingHorizontal`
+- 🚫 Prevent closing on backdrop tap with `disableDrag`
 - ⚡ **Zero dependencies** – no `Reanimated`, no `GestureHandler`
 
 ---
