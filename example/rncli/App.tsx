@@ -28,9 +28,9 @@ function App(): React.JSX.Element {
         borderTopLeftRadius={20} 
         borderTopRightRadius={20}
         maxTopSnapPoint={Platform.OS ==="ios" ? 0.93 : 1}
-        dragIndicatorColor="#ff9800" //#ff9800  //#666
+        dragIndicatorColor="#ccc" //#ff9800  //#666 //#ccc
         flattenOnFullOpen={true}
-        theme="#1e1e1e" //#1e1e1e //#fff
+        theme="#fff" //#1e1e1e //#fff
         disableDrag={false} 
        >
 
