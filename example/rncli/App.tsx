@@ -6,7 +6,7 @@
  */
 
 import React, {useRef, useState} from 'react';
-import {StyleSheet, Button, SafeAreaView, Text} from 'react-native';
+import {StyleSheet, Button, SafeAreaView, Text, Platform} from 'react-native';
 //import {SmoothSheet, SmoothSheetRef} from 'react-native-smooth-sheet';
 import HelloSmooth from './HelloSmooth';
 import SmoothSheet, { SmoothSheetRef } from './SmoothSheet';
@@ -26,9 +26,10 @@ function App(): React.JSX.Element {
         snapPoint={0.5} 
         paddingHorizontal={15} 
         borderTopLeftRadius={20} 
-        dragIndicatorColor="#ccc" //#ff9800  //#666
-        flattenOnFullOpen={true}
         borderTopRightRadius={20}
+        maxTopSnapPoint={Platform.OS ==="ios" ? 0.93 : 1}
+        dragIndicatorColor="#ff9800" //#ff9800  //#666
+        flattenOnFullOpen={true}
         theme="#1e1e1e" //#1e1e1e //#fff
         disableDrag={false} 
        >
@@ -37,7 +38,7 @@ function App(): React.JSX.Element {
            fontSize: 18, 
            marginBottom: 20, 
            fontWeight: 'bold',  
-           color: '#fff'
+           color: '#000'
            }}>
            Hello from Smooth Sheet 🎉
          </Text>

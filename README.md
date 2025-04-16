@@ -46,6 +46,7 @@ export default function App() {
         borderTopRightRadius={20} // default
         theme="#fff" // default
         disableDrag={false} // default
+        // maxTopSnapPoint={Platform.OS ==="ios" ? 0.93 : 1} optional
         //dragIndicatorColor="#ccc" --optional  //#ff9800  //#666
         //flattenOnFullOpen={false}  -- optional
       >
@@ -114,7 +115,8 @@ export default function App() {
         borderTopRightRadius={20} // default
         theme="#fff" // default
         disableDrag={false} // default
-         //dragIndicatorColor="#ccc" --optional  //#ff9800  //#666
+       // maxTopSnapPoint={Platform.OS ==="ios" ? 0.93 : 1} optional
+        //dragIndicatorColor="#ccc" --optional  //#ff9800  //#666
         //flattenOnFullOpen={false}  -- optional
       >
         <HelloSmooth sheetRef={sheetRef} />
@@ -142,6 +144,7 @@ export default function App() {
 | `disableDrag`         | `boolean`     | `false`     | Disables drag-to-close and tap outside to close functionality   
 | `dragIndicatorColor`  | `string`      | `#ccc` / `#666` | Customize the drag handle color. Defaults to `#ccc` (light) or `#666` (dark) |
 | `flattenOnFullOpen`   | `boolean`     | `false`     | If `true`, removes border raduis when fully expanded (`snapPoint = 1`)       |            |
+| `maxTopSnapPoint`     | `number`      | `0`         | Limits how far the user can drag upward. E.g. `0.93` means up to 93% height  |
 | `children`            | `ReactNode`   | —           | Content to render inside the bottom sheet                                   |
 
 ---

@@ -1,3 +1,4 @@
+
 import React, {
   useEffect,
   useRef,
@@ -25,6 +26,7 @@ type Props = {
   isVisible: boolean;
   onClose: () => void;
   snapPoint?: number;
+  maxTopSnapPoint?: number;
   borderTopLeftRadius?: number;
   borderTopRightRadius?: number;
   paddingHorizontal?: number;
@@ -41,6 +43,7 @@ const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
       isVisible,
       onClose,
       snapPoint = 0.25,
+      maxTopSnapPoint = 0,
       children,
       borderTopLeftRadius = 20,
       borderTopRightRadius = 20,
@@ -115,8 +118,14 @@ const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
           !disableDrag && Math.abs(gestureState.dy) > 5,
         onPanResponderMove: (_, gestureState) => {
           if (!disableDrag) {
-            const newY = currentOffset.current + gestureState.dy;
-            translateY.setValue(Math.max(0, newY));
+            const rawY = currentOffset.current + gestureState.dy;
+
+            const minY = maxTopSnapPoint
+              ? SCREEN_HEIGHT * (1 - maxTopSnapPoint)
+              : 0;
+
+            const newY = Math.max(minY, rawY);
+            translateY.setValue(newY);
           }
         },
         onPanResponderRelease: (_, gestureState) => {
@@ -214,6 +223,8 @@ const styles = StyleSheet.create({
 });
 
 export default SmoothSheet;
+
+
 
 
 
