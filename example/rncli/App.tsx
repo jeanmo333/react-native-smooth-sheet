@@ -23,13 +23,13 @@ function App(): React.JSX.Element {
         ref={sheetRef}
         isVisible={visible}
         onClose={() => setVisible(false)}
-        snapPoint={1} 
+        snapPoint={0.5} 
         paddingHorizontal={15} 
-        borderTopLeftRadius={0} 
+        borderTopLeftRadius={20} 
         dragIndicatorColor="#ccc" //#ff9800  //#666
         flattenOnFullOpen={true}
-        borderTopRightRadius={0}
-        theme="#fff" //#1e1e1e //#fff
+        borderTopRightRadius={20}
+        theme="#1e1e1e" //#1e1e1e //#fff
         disableDrag={false} 
        >
 
@@ -37,7 +37,7 @@ function App(): React.JSX.Element {
            fontSize: 18, 
            marginBottom: 20, 
            fontWeight: 'bold',  
-           color: '#000'
+           color: '#fff'
            }}>
            Hello from Smooth Sheet 🎉
          </Text>

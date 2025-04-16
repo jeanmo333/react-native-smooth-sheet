@@ -1,3 +1,4 @@
+
 import React, {
   useEffect,
   useRef,
@@ -12,6 +13,7 @@ import {
   StyleSheet,
   View,
   TouchableWithoutFeedback,
+  SafeAreaView
 } from 'react-native';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -184,7 +186,7 @@ const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
               },
             ]}
           />
-          <View style={styles.content}>{children}</View>
+          <SafeAreaView style={styles.content}>{children}</SafeAreaView>
         </Animated.View>
       </View>
     );
