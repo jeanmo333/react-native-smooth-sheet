@@ -16,9 +16,9 @@ import {
   View,
   FlatList,
 } from 'react-native';
-import {SmoothSheet, SmoothSheetRef} from 'react-native-smooth-sheet';
+//import {SmoothSheet, SmoothSheetRef} from 'react-native-smooth-sheet';
 import HelloSmooth from './HelloSmooth';
-//import SmoothSheet, { SmoothSheetRef } from './SmoothSheet';
+import SmoothSheet, { SmoothSheetRef } from './SmoothSheet';
 
 function App(): React.JSX.Element {
   const [visible, setVisible] = useState(false);
@@ -45,14 +45,16 @@ function App(): React.JSX.Element {
         <View style={{marginBottom: 10}}>
           <Button title="Close" onPress={() => sheetRef.current?.close()} />
         </View>
-
-        {/* <View style={{paddingBottom: 60}}>
+{/* 
+        <View style={{paddingBottom: 60}}>
           <FlatList
             data={data}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item}) => <Text>{item}</Text>}
-            contentContainerStyle={styles.scrollContent}
+            style={{marginBottom: 50}}
             nestedScrollEnabled
+            contentContainerStyle={{ paddingBottom: 80 }}
+          
           />
         </View> */}
 

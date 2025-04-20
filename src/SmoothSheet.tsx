@@ -194,13 +194,9 @@ const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
             ]}
           />
           <SafeAreaView style={styles.content}>
-            <ScrollView
-              contentContainerStyle={styles.scrollContent}
-              keyboardShouldPersistTaps="handled"
-              nestedScrollEnabled
-              showsVerticalScrollIndicator={false}>
+            <View>
               {children}
-            </ScrollView>
+            </View>
           </SafeAreaView>
         </Animated.View>
       </View>
