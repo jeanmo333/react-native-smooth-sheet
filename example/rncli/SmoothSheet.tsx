@@ -13,9 +13,10 @@ import {
   View,
   TouchableWithoutFeedback,
   SafeAreaView,
+  ScrollView,
 } from 'react-native';
 
-const { height: SCREEN_HEIGHT } = Dimensions.get('window');
+const {height: SCREEN_HEIGHT} = Dimensions.get('window');
 
 export type SmoothSheetRef = {
   close: () => void;
@@ -52,7 +53,7 @@ const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
       flattenOnFullOpen = false,
       dragIndicatorColor,
     },
-    ref
+    ref,
   ) => {
     const translateY = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
     const backdropOpacity = useRef(new Animated.Value(0)).current;
@@ -129,7 +130,7 @@ const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
         },
         onPanResponderRelease: (_, gestureState) => {
           if (!disableDrag) {
-            translateY.stopAnimation((val) => {
+            translateY.stopAnimation(val => {
               const newOffset = val;
               const shouldClose =
                 gestureState.dy > 100 || newOffset > SCREEN_HEIGHT * 0.75;
@@ -142,7 +143,7 @@ const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
             });
           }
         },
-      })
+      }),
     ).current;
 
     useEffect(() => {
@@ -172,15 +173,14 @@ const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
           style={[
             styles.sheet,
             {
-              transform: [{ translateY }],
+              transform: [{translateY}],
               backgroundColor: theme,
               borderTopLeftRadius: borderTopLeftAnim,
               borderTopRightRadius: borderTopRightAnim,
               paddingHorizontal,
             },
           ]}
-          {...(!disableDrag ? panResponder.panHandlers : {})}
-        >
+          {...(!disableDrag ? panResponder.panHandlers : {})}>
           <View
             style={[
               styles.handle,
@@ -193,11 +193,19 @@ const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
               },
             ]}
           />
-          <SafeAreaView style={styles.content}>{children}</SafeAreaView>
+          <SafeAreaView style={styles.content}>
+            <ScrollView
+              contentContainerStyle={styles.scrollContent}
+              keyboardShouldPersistTaps="handled"
+              nestedScrollEnabled
+              showsVerticalScrollIndicator={false}>
+              {children}
+            </ScrollView>
+          </SafeAreaView>
         </Animated.View>
       </View>
     );
-  }
+  },
 );
 
 const styles = StyleSheet.create({
@@ -219,7 +227,10 @@ const styles = StyleSheet.create({
   content: {
     paddingBottom: 20,
   },
+  scrollContent: {
+    paddingBottom: 40,
+    paddingTop: 10,
+  },
 });
 
 export default SmoothSheet;
-
