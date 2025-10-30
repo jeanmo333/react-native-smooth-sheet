@@ -174,20 +174,24 @@ const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
               paddingHorizontal,
             },
           ]}
-          {...(!disableDrag ? panResponder.panHandlers : {})}
         >
           <View
-            style={[
-              styles.handle,
-              {
-                backgroundColor: dragIndicatorColor
-                  ? dragIndicatorColor
-                  : isDark
-                    ? '#666'
-                    : '#ccc',
-              },
-            ]}
-          />
+            style={styles.dragArea}
+            {...(!disableDrag ? panResponder.panHandlers : {})}
+          >
+            <View
+              style={[
+                styles.handle,
+                {
+                  backgroundColor: dragIndicatorColor
+                    ? dragIndicatorColor
+                    : isDark
+                      ? '#666'
+                      : '#ccc',
+                },
+              ]}
+            />
+          </View>
           <SafeAreaView style={styles.content}>
             <View>{children}</View>
           </SafeAreaView>
@@ -206,14 +210,19 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     elevation: 10,
   },
+  dragArea: {
+    paddingBottom: 15,
+    paddingTop: 5,
+    alignItems: 'center'
+  },
   handle: {
     width: 50,
     height: 6,
     alignSelf: 'center',
     borderRadius: 10,
-    marginBottom: 10,
   },
   content: {
+    flex: 1,
     paddingBottom: 20,
   },
   scrollContent: {

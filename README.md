@@ -130,6 +130,165 @@ export default function App() {
 
 ---
 
+## 📜 ScrollView & FlatList Support
+
+The `SmoothSheet` works seamlessly with **ScrollView** and **FlatList** components. The drag functionality is isolated to the top drag area, preventing conflicts with scrollable content.
+
+### 📋 ScrollView Example
+
+```tsx
+import React, { useRef, useState } from 'react';
+import { View, Text, Button, ScrollView } from 'react-native';
+import { SmoothSheet, SmoothSheetRef } from 'react-native-smooth-sheet';
+
+export default function App() {
+  const [visible, setVisible] = useState(false);
+  const sheetRef = useRef<SmoothSheetRef>(null);
+
+  // Create data for ScrollView
+  const data = Array.from({ length: 20 }, (_, index) => ({
+    id: index + 1,
+    title: `Item ${index + 1}`,
+    description: `This is the description for item number ${index + 1}`,
+  }));
+
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Button title="Open Sheet" onPress={() => setVisible(true)} />
+
+      <SmoothSheet
+        ref={sheetRef}
+        isVisible={visible}
+        onClose={() => setVisible(false)}
+        snapPoint={0.7}
+        paddingHorizontal={15}
+        borderTopLeftRadius={20}
+        borderTopRightRadius={20}
+        maxTopSnapPoint={Platform.OS === 'ios' ? 0.93 : 1}
+        dragIndicatorColor="#ccc" //#ff9800  //#666 //#ccc
+        flattenOnFullOpen={true}
+        theme="#fff" //#1e1e1e //#fff
+        disableDrag={false}
+      >
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{ flex: 1 }}
+          contentContainerStyle={{ paddingBottom: 20 }}
+        >
+          {data.map((item) => (
+            <View
+              key={item.id}
+              style={{
+                backgroundColor: '#f5f5f5',
+                padding: 15,
+                marginVertical: 5,
+                borderRadius: 8,
+                borderWidth: 1,
+                borderColor: '#e0e0e0',
+              }}
+            >
+              <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 5 }}>
+                {item.title}
+              </Text>
+              <Text style={{ fontSize: 14, color: '#666' }}>
+                {item.description}
+              </Text>
+            </View>
+          ))}
+        </ScrollView>
+      </SmoothSheet>
+    </View>
+  );
+}
+```
+
+### 📱 FlatList Example
+
+```tsx
+import React, { useRef, useState } from 'react';
+import { View, Text, Button, FlatList } from 'react-native';
+import { SmoothSheet, SmoothSheetRef } from 'react-native-smooth-sheet';
+
+export default function App() {
+  const [visible, setVisible] = useState(false);
+  const sheetRef = useRef<SmoothSheetRef>(null);
+
+  // Create data for FlatList
+  const data = Array.from({ length: 50 }, (_, index) => ({
+    id: index + 1,
+    title: `Item ${index + 1}`,
+    description: `This is the description for item number ${index + 1}`,
+  }));
+
+  const renderItem = ({ item }) => (
+    <View
+      style={{
+        backgroundColor: '#f5f5f5',
+        padding: 15,
+        marginVertical: 5,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#e0e0e0',
+      }}
+    >
+      <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 5 }}>
+        {item.title}
+      </Text>
+      <Text style={{ fontSize: 14, color: '#666' }}>
+        {item.description}
+      </Text>
+    </View>
+  );
+
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Button title="Open Sheet" onPress={() => setVisible(true)} />
+
+      <SmoothSheet
+        ref={sheetRef}
+        isVisible={visible}
+        onClose={() => setVisible(false)}
+        snapPoint={0.7}
+        paddingHorizontal={15}
+        borderTopLeftRadius={20}
+        borderTopRightRadius={20}
+        maxTopSnapPoint={Platform.OS === 'ios' ? 0.93 : 1}
+        dragIndicatorColor="#ccc" //#ff9800  //#666 //#ccc
+        flattenOnFullOpen={true}
+        theme="#fff" //#1e1e1e //#fff
+        disableDrag={false}
+      >
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+          showsVerticalScrollIndicator={false}
+          style={{ height: 400 }}
+          contentContainerStyle={{ paddingBottom: 20 }}
+        />
+      </SmoothSheet>
+    </View>
+  );
+}
+```
+
+### ✨ Key Benefits
+
+- **🎯 Isolated Drag Area**: Dragging only works in the top handle area, not in the scrollable content
+- **🔄 Smooth Scrolling**: ScrollView and FlatList work naturally without interfering with sheet dragging
+- **📏 Flexible Height**: Use different `snapPoint` values to accommodate your content
+- **⚡ Performance**: FlatList provides optimal performance for large datasets
+- **🎨 Customizable**: Apply your own styles to list items and containers
+
+### 💡 Best Practices
+
+- **ScrollView**: Best for smaller lists (< 50 items) or mixed content types
+- **FlatList**: Ideal for large datasets with consistent item layouts
+- **Height Management**: Use `snapPoint` to provide adequate space for your content
+- **Content Padding**: Add `paddingBottom` to `contentContainerStyle` for better spacing
+
+---
+
 ## 📐 Props
 
 | Prop                  | Type          | Default     | Description                                                                 |

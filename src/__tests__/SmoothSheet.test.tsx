@@ -1,7 +1,7 @@
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
-import SmoothSheet, { type SmoothSheetRef } from '../SmoothSheet';
-import { Text, View } from 'react-native';
+
+import { render } from '@testing-library/react-native';
+import SmoothSheet from '../SmoothSheet';
+import { Text } from 'react-native';
 
 describe('SmoothSheet', () => {
   const mockOnClose = jest.fn();
