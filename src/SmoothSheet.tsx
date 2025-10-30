@@ -8,7 +8,6 @@ import {
   View,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -192,9 +191,7 @@ const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
               ]}
             />
           </View>
-          <SafeAreaView style={styles.content}>
             <View>{children}</View>
-          </SafeAreaView>
         </Animated.View>
       </View>
     );
@@ -220,14 +217,6 @@ const styles = StyleSheet.create({
     height: 6,
     alignSelf: 'center',
     borderRadius: 10,
-  },
-  content: {
-    flex: 1,
-    paddingBottom: 20,
-  },
-  scrollContent: {
-    paddingBottom: 40,
-    paddingTop: 10,
   },
 });
 

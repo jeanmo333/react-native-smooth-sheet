@@ -11701,16 +11701,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-safe-area-context@npm:^5.6.1":
-  version: 5.6.1
-  resolution: "react-native-safe-area-context@npm:5.6.1"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: f346615d5f8f26c0c8459d29c149ea3f66684b8ae79cea6fd48d118d039851a69a92955d67b455d0e7ab46639155c4357ebf58ec1859b2377ee459e2a04b602b
-  languageName: node
-  linkType: hard
-
 "react-native-smooth-sheet-example@workspace:example":
   version: 0.0.0-use.local
   resolution: "react-native-smooth-sheet-example@workspace:example"
@@ -11754,7 +11744,6 @@ __metadata:
     react: 19.1.0
     react-native: 0.81.4
     react-native-builder-bob: ^0.40.13
-    react-native-safe-area-context: ^5.6.1
     react-test-renderer: ^19.1.0
     release-it: ^19.0.4
     typescript: ^5.9.2
