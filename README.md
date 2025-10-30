@@ -172,7 +172,6 @@ export default function App() {
       >
         <ScrollView
           showsVerticalScrollIndicator={false}
-          style={{ flex: 1 }}
           contentContainerStyle={{ paddingBottom: 200 }}
         >
           {data.map((item) => (
@@ -220,7 +219,7 @@ export default function App() {
     description: `This is the description for item number ${index + 1}`,
   }));
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item } : { item: typeof data[0] }) => (
     <View
       style={{
         backgroundColor: '#f5f5f5',
@@ -263,9 +262,8 @@ export default function App() {
           renderItem={renderItem}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 20 }}
+          contentContainerStyle={{ paddingBottom: 200 }}
         />
-         <View style={{ paddingBottom: 500 }}/>
       </SmoothSheet>
     </View>
   );
