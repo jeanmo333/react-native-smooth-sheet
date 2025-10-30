@@ -167,7 +167,7 @@ export default function App() {
         maxTopSnapPoint={Platform.OS === 'ios' ? 0.93 : 1}
         dragIndicatorColor="#ccc" //#ff9800  //#666 //#ccc
         flattenOnFullOpen={true}
-        theme="#fff" //#1e1e1e //#fff
+        theme="#fff" ////#1e1e1e //#fff
         disableDrag={false}
       >
         <ScrollView
