@@ -173,7 +173,7 @@ export default function App() {
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{ flex: 1 }}
-          contentContainerStyle={{ paddingBottom: 20 }}
+          contentContainerStyle={{ paddingBottom: 200 }}
         >
           {data.map((item) => (
             <View
@@ -263,9 +263,9 @@ export default function App() {
           renderItem={renderItem}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
-          style={{ height: 400 }}
           contentContainerStyle={{ paddingBottom: 20 }}
         />
+         <View style={{ paddingBottom: 500 }}/>
       </SmoothSheet>
     </View>
   );
