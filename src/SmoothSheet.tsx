@@ -1,4 +1,10 @@
-import { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
+import {
+  useEffect,
+  useRef,
+  useImperativeHandle,
+  forwardRef,
+  useCallback,
+} from 'react';
 import type { ReactNode } from 'react';
 import {
   Animated,
@@ -73,7 +79,22 @@ const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
       close: () => closeSheet(),
     }));
 
-    const openSheet = () => {
+    // const openSheet = () => {
+    //   Animated.parallel([
+    //     Animated.timing(translateY, {
+    //       toValue: currentOffset.current,
+    //       duration: 300,
+    //       useNativeDriver: true,
+    //     }),
+    //     Animated.timing(backdropOpacity, {
+    //       toValue: 0.4,
+    //       duration: 300,
+    //       useNativeDriver: true,
+    //     }),
+    //   ]).start();
+    // };
+
+    const openSheet = useCallback(() => {
       Animated.parallel([
         Animated.timing(translateY, {
           toValue: currentOffset.current,
@@ -86,7 +107,7 @@ const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
           useNativeDriver: true,
         }),
       ]).start();
-    };
+    }, [translateY, backdropOpacity]);
 
     const closeSheet = () => {
       Animated.parallel([
@@ -144,7 +165,7 @@ const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
         currentOffset.current = SCREEN_HEIGHT * (1 - snapPoint);
         openSheet();
       }
-    }, [isVisible]);
+    }, [isVisible, openSheet, snapPoint]);
 
     if (!isVisible) return null;
 
@@ -154,8 +175,8 @@ const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
           <Animated.View
             style={[
               StyleSheet.absoluteFill,
+              styles.backdrop,
               {
-                backgroundColor: 'black',
                 opacity: backdropOpacity,
               },
             ]}
@@ -191,7 +212,7 @@ const SmoothSheet = forwardRef<SmoothSheetRef, Props>(
               ]}
             />
           </View>
-            <View>{children}</View>
+          <View>{children}</View>
         </Animated.View>
       </View>
     );
@@ -210,13 +231,16 @@ const styles = StyleSheet.create({
   dragArea: {
     paddingBottom: 15,
     paddingTop: 5,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   handle: {
     width: 50,
     height: 6,
     alignSelf: 'center',
     borderRadius: 10,
+  },
+  backdrop: {
+    backgroundColor: 'black',
   },
 });
 

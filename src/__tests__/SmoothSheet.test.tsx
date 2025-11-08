@@ -1,4 +1,3 @@
-
 import { render } from '@testing-library/react-native';
 import SmoothSheet from '../SmoothSheet';
 import { Text } from 'react-native';
@@ -34,7 +33,6 @@ describe('SmoothSheet', () => {
     );
     expect(queryByText('Test Content')).toBeTruthy();
   });
-
 
   it('handles disableDrag prop correctly', () => {
     const { queryByText } = render(
